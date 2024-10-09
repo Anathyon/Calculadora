@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora</title>
+    <link rel="icon" href="calculate_24dp_00000_FILL0_wght400_GRAD0_opsz24.svg">
+    <link rel="stylesheet" href="index.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,300..700;1,300..700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <main id="conteudo_principal">
+        <article id="calc"> 
+            <input type="text" id="inpu_display" readonly value="0">
+            <section id="button_container">
+                <button class="btn_op">%</button>
+                <button class="btn_op">CL</button>
+                <button class="btn_op">C</button>
+                <button class="btn_op">+</button>
+                <button class="btn_num">7</button>
+                <button class="btn_num">8</button>
+                <button class="btn_num">9</button>
+                <button class="btn_op">X</button>
+                <button class="btn_num">4</button>
+                <button class="btn_num">5</button>
+                <button class="btn_num">6</button>
+                <button class="btn_op">/</button>             
+                <button class="btn_num">1</button>
+                <button class="btn_num">2</button>
+                <button class="btn_num">3</button>
+                <button class="btn_op">-</button>
+                <button class="btn_op">.</button>
+                <button class="btn_num">0</button>
+                <button class="btn_op">X²</button>
+                <button class="btn_op">=</button>
+                <button class="btn_op" id="bt_nega_posi">±</button>
+            </section>           
+        </article>
+        <details>
+            <summary style="color: #000000; font-size: large; border: solid #ffffff 2%;">Histórico de Cálculos</summary>
+            <section id="hit_calc">
+            <ul id="lista_historico">
+            </ul>
+            <button id="bt_limpa_histo">Limpar Histórico</button>
+            </section>
+        </details>
+    </main>
+    <script src="script/index.js"></script>
+</body>
+</html>
