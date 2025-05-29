@@ -4,7 +4,7 @@
     padding: 0;
 }
 body {
-    background-color: #3d3d3d;
+    background: linear-gradient(120deg, #000000, #777777);
     color: #ffffff;
     display: flex;
     justify-content: center;
@@ -15,16 +15,16 @@ body {
     font-weight: weight;
     font-style: normal;
     font-weight: bold;
-
+    background-attachment: fixed;
 }
 #conteudo_principal {
-    background-color: rgba(158, 158, 158, 0.788);
+    background: linear-gradient(120deg, #000000c9, #333333);
     height: auto;
     width: auto;
     display: flex;
     justify-content: center;
     align-items: center;
-    border-radius: 3%;
+    border-radius: 1.2rem;
     flex-direction: column;
     position: static;
 }
@@ -36,17 +36,19 @@ body {
     flex-direction: column;
     justify-content: space-between;
     padding: 5%;
+    border-radius: 1.2rem;
 }
 #inpu_display {
     background-color: #b1b1b1;
     color: #000;
     height: 10%;
-    border-radius: 5px;
+    border-radius: 1.2rem;
     text-align: right;
     font-size: 2rem;
     padding: 10%;
-    margin-bottom: 10%;
+    margin-bottom: 5%;
     margin-top: 5%;
+    border: none;
 }
 #button_container {
     display: grid;
@@ -55,7 +57,7 @@ body {
     margin-bottom: 25%;
 }
 .btn_num,.btn_op {
-    background-color: #7e7e7ed5;
+    background: linear-gradient(120deg, #000000, #c4c2c2);
     border: none;
     border-radius: 50%;
     font-size: 1.5rem;
@@ -63,14 +65,19 @@ body {
     cursor: pointer;
 }
 .btn_num:hover{
-    background-color: #7e7e7e93;
+     background: linear-gradient(120deg, #22222280, #a8a8a8b7);
+     box-shadow:  0 0 0.1rem 0.1rem #ffffff91;
 }
+
 .btn_op{
-    background-color: #ff9900;
+    background: linear-gradient(120deg, #ff9900, #d43012);
+
 }
 .btn_op:hover{
-    background-color: #ff9900b6;
+    background: linear-gradient(120deg, #ff9900b2, #d42f12b6);
+    box-shadow:  0 0 0.1rem 0.1rem #f7353591;
 }
+
 #hit_calc{
     background-color: #00000073;
     color: #ffffff;
@@ -80,7 +87,10 @@ body {
     display: flex;
     justify-content: center;
     flex-direction: column;
+    border-radius: 1.2rem;
+    align-items: center;
 }
+
 li{
     list-style: none;
     display: flex;
@@ -90,16 +100,19 @@ li{
     display: none;
 }
 #bt_nega_posi{
-    border-radius: 20%;
+    border-radius: 1.2rem;
     padding: 4%;
 }
 #bt_limpa_histo{
-    border-radius: 5%;
+    border-radius: 1.2rem;
     padding: 2%;
-    font-size: small;
+    font-size: 0.9rem;
     background-color: #000000;
     color: #ffffff;
     cursor: pointer;
+    border: none;
+    margin-top: 2%;
+    width: 90%;
 }
 #bt_limpa_histo:hover{
     background-color: #00000077;
@@ -176,7 +189,6 @@ li{
     #conteudo_principal {
         height: auto;
         width: auto;
-        border-radius: 3%;
         position: relative;
         margin-top: 0.5rem;
         padding-top: 1%;
@@ -184,7 +196,6 @@ li{
     }
     #calc {
         padding: 2%;
-        border-radius: 3%;
         height: auto;
     }
 
