@@ -7,25 +7,94 @@ let guarda_num_atual: string = ""
 let recebe_operador: string | null = null
 let guarda_primeiro_num: string | null = null
 
-function alt_display(val: string) {
+const alt_display = (val: string) => {
     display.value = val
 }
 
-function recebe_num(num: string) {
+const recebe_num = (num: string):void => {
     if (num === "." && guarda_num_atual.includes(".")) return
 
     guarda_num_atual += num
     alt_display(guarda_num_atual)
 }
 
-function altera_sinal() {
+const potencia = (): void => {
+    if (guarda_num_atual !== "") {
+        const base = parseFloat(guarda_num_atual.replace(",", "."))
+        const expoenteStr = prompt(`Digite o expoente para ${base}:`)
+        if (expoenteStr !== null) {
+            const expoente = parseFloat(expoenteStr.replace(",", "."))
+            if (isNaN(expoente)) {
+                alert("Expoente inválido!")
+                return
+            }
+            const result = base ** expoente
+            const expressao = `${base}^${expoente}`
+            guarda_num_atual = result.toString()
+            alt_display(guarda_num_atual.replace(".", ","))
+
+            const itemHistorico = document.createElement("li")
+            itemHistorico.textContent = `${expressao} = ${guarda_num_atual.replace(".", ",")}`
+            listaHistorico.appendChild(itemHistorico)
+        }
+    }
+}
+
+const fatorial = ():void => {
+     if (guarda_num_atual !== "") {
+          const num = parseInt(guarda_num_atual.replace(",","."))
+          if (isNaN(num)) {
+              alert("Número inválido! Para realizar o cálculo, utilize números inteiros não negativos.")
+              return
+          }
+          let result:number = 1 
+          for (let i = 1; i <= num; i++) {
+               result *= i 
+          }
+          const expressao = `${num}!`
+          guarda_num_atual = result.toString()
+          alt_display(guarda_num_atual)
+
+        const itemHistorico = document.createElement("li")
+        itemHistorico.textContent = `${expressao} = ${guarda_num_atual}`
+        listaHistorico.appendChild(itemHistorico)
+     }
+}
+
+const altera_sinal = ():void => {
     if (guarda_num_atual !== "") {
         guarda_num_atual  = (parseFloat(guarda_num_atual.replace(",","."))* -1).toString()
         alt_display(guarda_num_atual.replace(",","."))
     }
 }
 
-function opera(ope: string) {
+const raiz = ():void => { 
+    if (guarda_num_atual !== "") {
+          const num = parseFloat(guarda_num_atual.replace(",","."))
+  
+        if (isNaN(num)) {
+            alert ("Valor inválido")
+            return
+        }       
+
+        if (num < 0) {
+            alert("Não é possível calcular raíz de números negativos!")
+            return
+        }  
+    
+     const result = Math.sqrt(num)
+     const expressao = `√(${guarda_num_atual})`
+
+     guarda_num_atual = result.toString()
+     alt_display(guarda_num_atual.replace(",","."))
+     
+     const ne_historico = document.createElement("li")
+     ne_historico.textContent = `${expressao} = ${guarda_num_atual.replace(",",".")}`
+     listaHistorico.appendChild(ne_historico)
+    }
+}
+
+const opera = (ope: string):void => {
     if (guarda_primeiro_num === null) {
         guarda_primeiro_num = guarda_num_atual
         guarda_num_atual = ""
@@ -33,11 +102,11 @@ function opera(ope: string) {
     recebe_operador = ope
 }
 
-function limpa_historico() {
+const limpa_historico = ():void => {
     listaHistorico.innerHTML = ""
 }
 
-function calcular() {
+const calcular = ():void => {
     if (guarda_primeiro_num && recebe_operador) {
         const primeiro = parseFloat(guarda_primeiro_num.replace(",", "."))
         const segundo = parseFloat(guarda_num_atual.replace(",", "."))
@@ -81,14 +150,14 @@ function calcular() {
     }
 }
 
-function limpa_tudo() {
+const limpa_tudo = ():void => {
     guarda_num_atual = ""
     guarda_primeiro_num = null
     recebe_operador = null
     alt_display("0")
 }
 
-function limpa_ultimo_caractere() {
+const limpa_ultimo_caractere = () => {
     if (guarda_num_atual.length > 0){
         guarda_num_atual = guarda_num_atual.slice(0,-1)
         alt_display(guarda_num_atual || "0")
@@ -112,6 +181,12 @@ btns.forEach((b) => {
             recebe_num(".")
         } else if (val === "±"){
             altera_sinal()
+        } else if (val === "√") {
+            raiz()
+        } else if (val === "xʸ") {
+            potencia()
+        }else if (val === "n!") {
+            fatorial()
         }
           else if (val === "Limpar Histórico"){
             if (listaHistorico.children.length === 0) {

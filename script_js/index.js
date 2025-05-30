@@ -6,32 +6,91 @@ const bt_limpa_histo = document.querySelector("#bt_limpa_histo");
 let guarda_num_atual = "";
 let recebe_operador = null;
 let guarda_primeiro_num = null;
-function alt_display(val) {
+const alt_display = (val) => {
     display.value = val;
-}
-function recebe_num(num) {
+};
+const recebe_num = (num) => {
     if (num === "." && guarda_num_atual.includes("."))
         return;
     guarda_num_atual += num;
     alt_display(guarda_num_atual);
-}
-function altera_sinal() {
+};
+const potencia = () => {
+    if (guarda_num_atual !== "") {
+        const base = parseFloat(guarda_num_atual.replace(",", "."));
+        const expoenteStr = prompt(`Digite o expoente para ${base}:`);
+        if (expoenteStr !== null) {
+            const expoente = parseFloat(expoenteStr.replace(",", "."));
+            if (isNaN(expoente)) {
+                alert("Expoente inválido!");
+                return;
+            }
+            const result = base ** expoente;
+            const expressao = `${base}^${expoente}`;
+            guarda_num_atual = result.toString();
+            alt_display(guarda_num_atual.replace(".", ","));
+            const itemHistorico = document.createElement("li");
+            itemHistorico.textContent = `${expressao} = ${guarda_num_atual.replace(".", ",")}`;
+            listaHistorico.appendChild(itemHistorico);
+        }
+    }
+};
+const fatorial = () => {
+    if (guarda_num_atual !== "") {
+        const num = parseInt(guarda_num_atual.replace(",", "."));
+        if (isNaN(num)) {
+            alert("Número inválido! Para realizar o cálculo, utilize números inteiros não negativos.");
+            return;
+        }
+        let result = 1;
+        for (let i = 1; i <= num; i++) {
+            result *= i;
+        }
+        const expressao = `${num}!`;
+        guarda_num_atual = result.toString();
+        alt_display(guarda_num_atual);
+        const itemHistorico = document.createElement("li");
+        itemHistorico.textContent = `${expressao} = ${guarda_num_atual}`;
+        listaHistorico.appendChild(itemHistorico);
+    }
+};
+const altera_sinal = () => {
     if (guarda_num_atual !== "") {
         guarda_num_atual = (parseFloat(guarda_num_atual.replace(",", ".")) * -1).toString();
         alt_display(guarda_num_atual.replace(",", "."));
     }
-}
-function opera(ope) {
+};
+const raiz = () => {
+    if (guarda_num_atual !== "") {
+        const num = parseFloat(guarda_num_atual.replace(",", "."));
+        if (isNaN(num)) {
+            alert("Valor inválido");
+            return;
+        }
+        if (num < 0) {
+            alert("Não é possível calcular raíz de números negativos!");
+            return;
+        }
+        const result = Math.sqrt(num);
+        const expressao = `√(${guarda_num_atual})`;
+        guarda_num_atual = result.toString();
+        alt_display(guarda_num_atual.replace(",", "."));
+        const ne_historico = document.createElement("li");
+        ne_historico.textContent = `${expressao} = ${guarda_num_atual.replace(",", ".")}`;
+        listaHistorico.appendChild(ne_historico);
+    }
+};
+const opera = (ope) => {
     if (guarda_primeiro_num === null) {
         guarda_primeiro_num = guarda_num_atual;
         guarda_num_atual = "";
     }
     recebe_operador = ope;
-}
-function limpa_historico() {
+};
+const limpa_historico = () => {
     listaHistorico.innerHTML = "";
-}
-function calcular() {
+};
+const calcular = () => {
     if (guarda_primeiro_num && recebe_operador) {
         const primeiro = parseFloat(guarda_primeiro_num.replace(",", "."));
         const segundo = parseFloat(guarda_num_atual.replace(",", "."));
@@ -68,19 +127,19 @@ function calcular() {
         guarda_primeiro_num = null;
         recebe_operador = null;
     }
-}
-function limpa_tudo() {
+};
+const limpa_tudo = () => {
     guarda_num_atual = "";
     guarda_primeiro_num = null;
     recebe_operador = null;
     alt_display("0");
-}
-function limpa_ultimo_caractere() {
+};
+const limpa_ultimo_caractere = () => {
     if (guarda_num_atual.length > 0) {
         guarda_num_atual = guarda_num_atual.slice(0, -1);
         alt_display(guarda_num_atual || "0");
     }
-}
+};
 btns.forEach((b) => {
     b.addEventListener("click", () => {
         const val = b.textContent || "";
@@ -101,6 +160,15 @@ btns.forEach((b) => {
         }
         else if (val === "±") {
             altera_sinal();
+        }
+        else if (val === "√") {
+            raiz();
+        }
+        else if (val === "xʸ") {
+            potencia();
+        }
+        else if (val === "n!") {
+            fatorial();
         }
         else if (val === "Limpar Histórico") {
             if (listaHistorico.children.length === 0) {
