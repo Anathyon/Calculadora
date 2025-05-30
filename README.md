@@ -1,45 +1,78 @@
-Calculadora - Projeto
+# 🧮 Calculadora
 
-Este projeto é uma calculadora desenvolvida utilizando HTML, CSS, JavaScript e TypeScript. A calculadora é totalmente funcional, com interface amigável e responsiva para diferentes dispositivos. O objetivo deste projeto é fornecer uma experiência fluida ao usuário para realizar cálculos simples, além de permitir a correção de números digitados e a visualização do histórico de operações realizadas.
-Funcionalidades
+Este é um projeto desenvolvido em **HTML + CSS + JavaScript**, hospedado na **Vercel**, que oferece uma calculadora simples e funcional.  
+Além de realizar as operações matemáticas básicas, a calculadora conta com um **histórico interativo**, **botão de correção** e um **design responsivo e amigável** para todas as telas.
 
-    Operações Básicas: A calculadora suporta as operações de adição, subtração, multiplicação, divisão e porcentagem.
-    Correção de Caractere: Um botão que permite apagar o último caractere digitado, facilitando a correção de erros de digitação.
-    Altera Sinal: O botão de mudança de sinal (±) permite transformar números positivos em negativos e vice-versa.
-    Cálculo ao Quadrado: Um operador especial permite calcular o quadrado de um número.
-    Histórico de Operações: Todas as operações realizadas são salvas em um histórico que pode ser visualizado. O usuário pode limpar o histórico a qualquer momento.
-    Limpeza Total: Um botão de "Clear" que limpa todo o conteúdo do display e reseta as variáveis.
-    Responsividade: A interface da calculadora se adapta a diferentes tamanhos de tela, proporcionando uma experiência consistente tanto em dispositivos móveis quanto em desktops.
+---
 
-Como Utilizar
+## 📌 Funcionalidades
 
-    Clone este repositório:
+- ✅ Realiza as quatro operações básicas (adição, subtração, multiplicação e divisão)
+- ✅ Histórico de cálculos exibido de forma clara e interativa
+- ✅ Botão **C** que apaga um único caractere, facilitando correções
+- ✅ Layout responsivo e adaptável (Mobile, Tablet e Desktop)
+- ✅ Estilização moderna e acessível
+- ✅ Deploy completo na Vercel
 
-    bash
+---
 
-git clone https://github.com/seu-usuario/nome-do-repositorio.git
+## 🧪 Tecnologias Utilizadas
 
-Navegue até o diretório do projeto:
+| Ferramenta | Descrição |
+|------------|-----------|
+| [HTML5](https://developer.mozilla.org/pt-BR/docs/Web/HTML) | Estruturação semântica da página |
+| [CSS3](https://developer.mozilla.org/pt-BR/docs/Web/CSS) | Estilização responsiva e moderna |
+| [JavaScript](https://developer.mozilla.org/pt-BR/docs/Web/JavaScript) | Lógica das operações e interações |
+| [Vercel](https://vercel.com/) | Plataforma de deploy automatizado |
 
-bash
+---
 
-    cd nome-do-repositorio
+## 🖼️ Layout
 
-    Abra o arquivo index.html no navegador para começar a usar a calculadora.
+> 💻 Desktop | 📱 Mobile
 
-Tecnologias Utilizadas
+| Desktop             | Mobile              |
+|---------------------|---------------------|
+<div align="center">
+  <img src="assets/calc-desktop.png" width="400" alt="Versão Desktop" />
+  <img src="assets/calc-mobile.jpg" width="200" alt="Versão Mobile" />
+</div>
 
-    HTML5 para a estrutura da calculadora.
-    CSS3 para o design e responsividade.
-    JavaScript para a interação e manipulação dos elementos.
-    TypeScript para melhorar a segurança e manutenção do código.
+---
 
-Futuras Melhorias
+## 📦 Instalação Local
 
-    Implementação de mais operações avançadas (como raiz quadrada e exponenciais).
-    Interface aprimorada com temas claros e escuros.
-    Suporte para teclados físicos para melhorar a acessibilidade.
+```
+Clone o repositório
 
-Contribuição
+git clone https://github.com/seu-usuario/calculadora.git
+cd calculadora
+Execute localmente
+Abra o arquivo index.html no navegador ou use um servidor local
+```
+## 🔒 Validação e Usabilidade
 
-Sinta-se à vontade para contribuir com sugestões, melhorias ou reportar bugs.
+- Correção de números e operações com o botão **C**.
+- Histórico de cálculos exibido em formato interativo para fácil consulta.
+- Layout adaptável para diferentes tamanhos de tela.
+
+---
+
+## 🌐 Deploy na Vercel
+
+[![Deploy na Vercel](https://vercel.com/button)](https://calculadora-six-rosy.vercel.app/)
+
+---
+
+## 🤝 Contribuições
+
+Contribuições são sempre bem-vindas!  
+Se você tiver ideias para melhorar o projeto ou identificar bugs, sinta-se à vontade para abrir uma issue ou pull request.
+
+---
+
+## 👨‍💻 Autor
+
+Desenvolvido por: **Anathyon Erysson**  
+📫 anathyonerysson@protonmail.com  
+🔗 [LinkedIn](https://www.linkedin.com/in/anathyonerysson/)
