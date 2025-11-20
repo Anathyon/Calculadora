@@ -293,6 +293,15 @@ body {
 }
 
 /* Responsive Design */
+@media (min-width: 769px) {
+  .calculator-container {
+    max-width: 450px;
+  }
+  .buttons {
+    grid-template-columns: repeat(5, 1fr);
+  }
+}
+
 @media (max-width: 480px) {
   .calculator-container {
     padding: 15px;
