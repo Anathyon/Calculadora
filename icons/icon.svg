@@ -1,0 +1,27 @@
+<svg width="512" height="512" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <rect width="512" height="512" rx="80" fill="#2a2a2a"/>
+  
+  <!-- Display area -->
+  <rect x="64" y="64" width="384" height="128" rx="16" fill="#ff9500"/>
+  
+  <!-- Grid of 4 squares -->
+  <!-- Top left - Plus -->
+  <rect x="64" y="224" width="160" height="160" rx="8" fill="#ff6b00"/>
+  <rect x="124" y="264" width="40" height="80" fill="#ffffff"/>
+  <rect x="104" y="284" width="80" height="40" fill="#ffffff"/>
+  
+  <!-- Top right - Minus -->
+  <rect x="288" y="224" width="160" height="160" rx="8" fill="#ff6b00"/>
+  <rect x="328" y="284" width="80" height="40" fill="#ffffff"/>
+  
+  <!-- Bottom left - Multiply -->
+  <rect x="64" y="448" width="160" height="160" rx="8" fill="#ff6b00"/>
+  <rect x="124" y="488" width="40" height="80" fill="#ffffff" transform="rotate(45 144 528)"/>
+  <rect x="104" y="508" width="80" height="40" fill="#ffffff" transform="rotate(45 144 528)"/>
+  
+  <!-- Bottom right - Equals -->
+  <rect x="288" y="448" width="160" height="160" rx="8" fill="#1e1e1e"/>
+  <rect x="328" y="488" width="80" height="20" fill="#ffffff"/>
+  <rect x="328" y="520" width="80" height="20" fill="#ffffff"/>
+</svg>

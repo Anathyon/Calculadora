@@ -6,6 +6,14 @@
     <title>Calculadora</title>
     <link rel="icon" href="svgs/calculator-part-2-svgrepo-com.svg">
     <link rel="stylesheet" href="CSS/index.css">
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#ff9500">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Calculadora">
+    <link rel="apple-touch-icon" href="icons/icon.svg">
+    <meta name="msapplication-TileColor" content="#2a2a2a">
+    <meta name="msapplication-config" content="browserconfig.xml">
 </head>
 <body>
     <div class="calculator-container">
@@ -84,5 +92,28 @@
     </div>
     
     <script src="script_js/index.js"></script>
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('./sw.js')
+                    .then(registration => {
+                        console.log('SW: Registered successfully', registration.scope);
+                        
+                        // Check for updates
+                        registration.addEventListener('updatefound', () => {
+                            const newWorker = registration.installing;
+                            newWorker.addEventListener('statechange', () => {
+                                if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
+                                    console.log('SW: New version available');
+                                }
+                            });
+                        });
+                    })
+                    .catch(error => {
+                        console.error('SW: Registration failed', error);
+                    });
+            });
+        }
+    </script>
 </body>
 </html>
