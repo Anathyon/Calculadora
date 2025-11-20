@@ -4,52 +4,87 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Calculadora</title>
-    <link rel="icon" href="svgs/calculate_24dp_00000_FILL0_wght400_GRAD0_opsz24.svg">
+    <link rel="icon" href="svgs/calculator-part-2-svgrepo-com.svg">
     <link rel="stylesheet" href="CSS/index.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,300..700;1,300..700&display=swap" rel="stylesheet">
 </head>
 <body>
-    <main id="conteudo_principal">
-        <article id="calc"> 
-            <input type="text" id="inpu_display" readonly value="0">
-            <section id="button_container">
-                <button class="btn_op">%</button>
-                <button class="btn_op">CL</button>
-                <button class="btn_op">C</button>
-                <button class="btn_op">+</button>
-                <button class="btn_num">7</button>
-                <button class="btn_num">8</button>
-                <button class="btn_num">9</button>
-                <button class="btn_op">X</button>
-                <button class="btn_num">4</button>
-                <button class="btn_num">5</button>
-                <button class="btn_num">6</button>
-                <button class="btn_op">/</button>             
-                <button class="btn_num">1</button>
-                <button class="btn_num">2</button>
-                <button class="btn_num">3</button>
-                <button class="btn_op">-</button>
-                <button class="btn_op">.</button>
-                <button class="btn_num">0</button>
-                <button class="btn_op">X²</button>
-                <button class="btn_op">=</button>
-                <button class="btn_op">√</button> 
-                <button class="btn_op">xʸ</button> 
-                <button class="btn_op">n!</button> 
-                <button class="btn_op" id="bt_nega_posi">±</button>
-            </section>           
-        </article>
-        <details>
-            <summary style="color: #000000; font-size: large; color: #ffffff; text-align: center;">Histórico de Cálculos</summary>
-            <section id="hit_calc">
-            <ul id="lista_historico">
-            </ul>
-            <button id="bt_limpa_histo">Limpar Histórico</button>
-            </section>
-        </details>
-    </main>
+    <div class="calculator-container">
+        <div class="calculator-header">
+            <h1>Calculadora</h1>
+            <button class="history-btn" id="history-btn"><img src="svgs/history-svgrepo-com.svg" alt="SVG-History"></button>
+        </div>
+        
+        <div class="calculator">
+            <div class="display">
+                <input type="text" id="display" readonly value="0">
+            </div>
+            
+            <div class="buttons">
+                <!-- Primeira linha - Funções científicas -->
+                <button class="btn btn-function">sin</button>
+                <button class="btn btn-function">cos</button>
+                <button class="btn btn-function">tan</button>
+                <button class="btn btn-function">log</button>
+                
+                <!-- Segunda linha -->
+                <button class="btn btn-function">ln</button>
+                <button class="btn btn-function">π</button>
+                <button class="btn btn-function">e</button>
+                <button class="btn btn-function">x²</button>
+                
+                <!-- Terceira linha -->
+                <button class="btn btn-function">√</button>
+                <button class="btn btn-function">n!</button>
+                <button class="btn btn-function">1/x</button>
+                <button class="btn btn-delete"><img src="svgs/eraser-svgrepo-com.svg" alt="SVG-Delete"></button>
+                
+                <!-- Quarta linha -->
+                <button class="btn btn-clear">CL</button>
+                <button class="btn btn-clear">C</button>
+                <button class="btn btn-operator">%</button>
+                <button class="btn btn-operator">/</button>
+                
+                <!-- Quinta linha -->
+                <button class="btn btn-number">7</button>
+                <button class="btn btn-number">8</button>
+                <button class="btn btn-number">9</button>
+                <button class="btn btn-operator">×</button>
+                
+                <!-- Sexta linha -->
+                <button class="btn btn-number">4</button>
+                <button class="btn btn-number">5</button>
+                <button class="btn btn-number">6</button>
+                <button class="btn btn-operator">-</button>
+                
+                <!-- Sétima linha -->
+                <button class="btn btn-number">1</button>
+                <button class="btn btn-number">2</button>
+                <button class="btn btn-number">3</button>
+                <button class="btn btn-operator">+</button>
+                
+                <!-- Oitava linha -->
+                <button class="btn btn-function">±</button>
+                <button class="btn btn-number">0</button>
+                <button class="btn btn-function">.</button>
+                <button class="btn btn-equals">=</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Modal do Histórico -->
+    <div id="history-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Histórico de Cálculos</h2>
+                <span class="close">&times;</span>
+            </div>
+            <div class="modal-body">
+                <ul id="history-list"></ul>
+                <button id="clear-history" class="clear-btn">Limpar Histórico</button>
+            </div>
+        </div>
+    </div>
+    
     <script src="script_js/index.js"></script>
 </body>
 </html>

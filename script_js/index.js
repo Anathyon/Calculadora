@@ -1,185 +1,303 @@
 "use strict";
-const display = document.querySelector("#inpu_display");
-const btns = document.querySelectorAll("button");
-const listaHistorico = document.querySelector("#lista_historico");
-const bt_limpa_histo = document.querySelector("#bt_limpa_histo");
-let guarda_num_atual = "";
-let recebe_operador = null;
-let guarda_primeiro_num = null;
-const alt_display = (val) => {
-    display.value = val;
-};
-const recebe_num = (num) => {
-    if (num === "." && guarda_num_atual.includes("."))
-        return;
-    guarda_num_atual += num;
-    alt_display(guarda_num_atual);
-};
-const potencia = () => {
-    if (guarda_num_atual !== "") {
-        const base = parseFloat(guarda_num_atual.replace(",", "."));
-        const expoenteStr = prompt(`Digite o expoente para ${base}:`);
-        if (expoenteStr !== null) {
-            const expoente = parseFloat(expoenteStr.replace(",", "."));
-            if (isNaN(expoente)) {
-                alert("Expoente inválido!");
-                return;
-            }
-            const result = base ** expoente;
-            const expressao = `${base}^${expoente}`;
-            guarda_num_atual = result.toString();
-            alt_display(guarda_num_atual.replace(".", ","));
-            const itemHistorico = document.createElement("li");
-            itemHistorico.textContent = `${expressao} = ${guarda_num_atual.replace(".", ",")}`;
-            listaHistorico.appendChild(itemHistorico);
+class ScientificCalculator {
+    display;
+    currentInput = "0";
+    operator = null;
+    previousInput = null;
+    shouldResetDisplay = false;
+    history = [];
+    constructor() {
+        this.display = document.getElementById('display');
+        this.initializeEventListeners();
+        this.loadHistory();
+    }
+    initializeEventListeners() {
+        const buttons = document.querySelectorAll('.btn');
+        buttons.forEach(button => {
+            button.addEventListener('click', (e) => {
+                const target = e.target;
+                this.handleButtonClick(target.textContent || '');
+            });
+        });
+        // Modal controls
+        const historyBtn = document.getElementById('history-btn');
+        const modal = document.getElementById('history-modal');
+        const closeBtn = document.querySelector('.close');
+        const clearHistoryBtn = document.getElementById('clear-history');
+        historyBtn?.addEventListener('click', () => this.showHistory());
+        closeBtn?.addEventListener('click', () => this.hideHistory());
+        clearHistoryBtn?.addEventListener('click', () => this.clearHistory());
+        window.addEventListener('click', (e) => {
+            if (e.target === modal)
+                this.hideHistory();
+        });
+    }
+    handleButtonClick(value) {
+        if (this.isNumber(value) || value === '.') {
+            this.inputNumber(value);
+        }
+        else if (this.isBasicOperator(value)) {
+            this.inputOperator(value);
+        }
+        else if (value === '=') {
+            this.calculate();
+        }
+        else if (value === 'C') {
+            this.clear();
+        }
+        else if (value === 'CL') {
+            this.clearAll();
+        }
+        else if (value === '⌫') {
+            this.backspace();
+        }
+        else if (value === '±') {
+            this.toggleSign();
+        }
+        else {
+            this.handleScientificFunction(value);
         }
     }
-};
-const fatorial = () => {
-    if (guarda_num_atual !== "") {
-        const num = parseInt(guarda_num_atual.replace(",", "."));
-        if (isNaN(num)) {
-            alert("Número inválido! Para realizar o cálculo, utilize números inteiros não negativos.");
+    isNumber(value) {
+        return /^\d$/.test(value);
+    }
+    isBasicOperator(value) {
+        return ['+', '-', '×', '/', '%'].includes(value);
+    }
+    inputNumber(num) {
+        if (num === '.' && this.currentInput.includes('.'))
             return;
+        if (this.shouldResetDisplay) {
+            this.currentInput = num === '.' ? '0.' : num;
+            this.shouldResetDisplay = false;
         }
-        let result = 1;
-        for (let i = 1; i <= num; i++) {
-            result *= i;
+        else {
+            this.currentInput = this.currentInput === '0' ? num : this.currentInput + num;
         }
-        const expressao = `${num}!`;
-        guarda_num_atual = result.toString();
-        alt_display(guarda_num_atual);
-        const itemHistorico = document.createElement("li");
-        itemHistorico.textContent = `${expressao} = ${guarda_num_atual}`;
-        listaHistorico.appendChild(itemHistorico);
+        this.updateDisplay();
     }
-};
-const altera_sinal = () => {
-    if (guarda_num_atual !== "") {
-        guarda_num_atual = (parseFloat(guarda_num_atual.replace(",", ".")) * -1).toString();
-        alt_display(guarda_num_atual.replace(",", "."));
+    inputOperator(op) {
+        if (this.operator && !this.shouldResetDisplay) {
+            this.calculate();
+        }
+        this.previousInput = this.currentInput;
+        this.operator = op;
+        this.shouldResetDisplay = true;
     }
-};
-const raiz = () => {
-    if (guarda_num_atual !== "") {
-        const num = parseFloat(guarda_num_atual.replace(",", "."));
-        if (isNaN(num)) {
-            alert("Valor inválido");
+    calculate() {
+        if (!this.operator || !this.previousInput)
             return;
-        }
-        if (num < 0) {
-            alert("Não é possível calcular raíz de números negativos!");
-            return;
-        }
-        const result = Math.sqrt(num);
-        const expressao = `√(${guarda_num_atual})`;
-        guarda_num_atual = result.toString();
-        alt_display(guarda_num_atual.replace(",", "."));
-        const ne_historico = document.createElement("li");
-        ne_historico.textContent = `${expressao} = ${guarda_num_atual.replace(",", ".")}`;
-        listaHistorico.appendChild(ne_historico);
-    }
-};
-const opera = (ope) => {
-    if (guarda_primeiro_num === null) {
-        guarda_primeiro_num = guarda_num_atual;
-        guarda_num_atual = "";
-    }
-    recebe_operador = ope;
-};
-const limpa_historico = () => {
-    listaHistorico.innerHTML = "";
-};
-const calcular = () => {
-    if (guarda_primeiro_num && recebe_operador) {
-        const primeiro = parseFloat(guarda_primeiro_num.replace(",", "."));
-        const segundo = parseFloat(guarda_num_atual.replace(",", "."));
-        let result = 0;
-        let expressao = `${guarda_primeiro_num} ${recebe_operador} ${guarda_num_atual}`;
-        switch (recebe_operador) {
-            case "+":
-                result = primeiro + segundo;
+        const prev = parseFloat(this.previousInput);
+        const current = parseFloat(this.currentInput);
+        let result;
+        switch (this.operator) {
+            case '+':
+                result = prev + current;
                 break;
-            case "-":
-                result = primeiro - segundo;
+            case '-':
+                result = prev - current;
                 break;
-            case "X":
-                result = primeiro * segundo;
+            case '×':
+                result = prev * current;
                 break;
-            case "/":
-                result = primeiro / segundo;
+            case '/':
+                if (current === 0) {
+                    alert('Erro: Divisão por zero!');
+                    return;
+                }
+                result = prev / current;
                 break;
-            case "%":
-                result = (primeiro * segundo) / 100;
-                break;
-            case "X²":
-                result = primeiro ** 2;
-                expressao = `${primeiro}²`;
+            case '%':
+                result = (prev * current) / 100;
                 break;
             default:
                 return;
         }
-        guarda_num_atual = result.toString();
-        alt_display(guarda_num_atual.replace(".", ","));
-        const itemHistorico = document.createElement("li");
-        itemHistorico.textContent = `${expressao} = ${guarda_num_atual.replace(".", ",")}`;
-        listaHistorico.appendChild(itemHistorico);
-        guarda_primeiro_num = null;
-        recebe_operador = null;
+        const expression = `${this.previousInput} ${this.operator} ${this.currentInput} = ${result}`;
+        this.addToHistory(expression);
+        this.currentInput = result.toString();
+        this.operator = null;
+        this.previousInput = null;
+        this.shouldResetDisplay = true;
+        this.updateDisplay();
     }
-};
-const limpa_tudo = () => {
-    guarda_num_atual = "";
-    guarda_primeiro_num = null;
-    recebe_operador = null;
-    alt_display("0");
-};
-const limpa_ultimo_caractere = () => {
-    if (guarda_num_atual.length > 0) {
-        guarda_num_atual = guarda_num_atual.slice(0, -1);
-        alt_display(guarda_num_atual || "0");
+    handleScientificFunction(func) {
+        const current = parseFloat(this.currentInput);
+        let result;
+        let expression;
+        switch (func) {
+            case 'sin':
+                result = Math.sin(this.toRadians(current));
+                expression = `sin(${current}) = ${result}`;
+                break;
+            case 'cos':
+                result = Math.cos(this.toRadians(current));
+                expression = `cos(${current}) = ${result}`;
+                break;
+            case 'tan':
+                result = Math.tan(this.toRadians(current));
+                expression = `tan(${current}) = ${result}`;
+                break;
+            case 'log':
+                if (current <= 0) {
+                    alert('Erro: Logaritmo de número não positivo!');
+                    return;
+                }
+                result = Math.log10(current);
+                expression = `log(${current}) = ${result}`;
+                break;
+            case 'ln':
+                if (current <= 0) {
+                    alert('Erro: Logaritmo natural de número não positivo!');
+                    return;
+                }
+                result = Math.log(current);
+                expression = `ln(${current}) = ${result}`;
+                break;
+            case '√':
+                if (current < 0) {
+                    alert('Erro: Raiz quadrada de número negativo!');
+                    return;
+                }
+                result = Math.sqrt(current);
+                expression = `√(${current}) = ${result}`;
+                break;
+            case 'x²':
+                result = current * current;
+                expression = `(${current})² = ${result}`;
+                break;
+            case '1/x':
+                if (current === 0) {
+                    alert('Erro: Divisão por zero!');
+                    return;
+                }
+                result = 1 / current;
+                expression = `1/(${current}) = ${result}`;
+                break;
+            case 'n!':
+                if (current < 0 || !Number.isInteger(current)) {
+                    alert('Erro: Fatorial apenas para números inteiros não negativos!');
+                    return;
+                }
+                result = this.factorial(current);
+                expression = `${current}! = ${result}`;
+                break;
+            case 'π':
+                result = Math.PI;
+                expression = `π = ${result}`;
+                break;
+            case 'e':
+                result = Math.E;
+                expression = `e = ${result}`;
+                break;
+            default:
+                return;
+        }
+        this.addToHistory(expression);
+        this.currentInput = result.toString();
+        this.shouldResetDisplay = true;
+        this.updateDisplay();
     }
-};
-btns.forEach((b) => {
-    b.addEventListener("click", () => {
-        const val = b.textContent || "";
-        if (!isNaN(Number(val))) {
-            recebe_num(val);
+    toRadians(degrees) {
+        return degrees * (Math.PI / 180);
+    }
+    factorial(n) {
+        if (n <= 1)
+            return 1;
+        return n * this.factorial(n - 1);
+    }
+    toggleSign() {
+        if (this.currentInput !== '0') {
+            this.currentInput = this.currentInput.startsWith('-')
+                ? this.currentInput.slice(1)
+                : '-' + this.currentInput;
+            this.updateDisplay();
         }
-        else if (val === "C") {
-            limpa_ultimo_caractere();
-        }
-        else if (val === "CL") {
-            limpa_tudo();
-        }
-        else if (val === "=") {
-            calcular();
-        }
-        else if (val === ".") {
-            recebe_num(".");
-        }
-        else if (val === "±") {
-            altera_sinal();
-        }
-        else if (val === "√") {
-            raiz();
-        }
-        else if (val === "xʸ") {
-            potencia();
-        }
-        else if (val === "n!") {
-            fatorial();
-        }
-        else if (val === "Limpar Histórico") {
-            if (listaHistorico.children.length === 0) {
-                alert("Nenhum cálculo foi realizado ainda!");
-            }
-            else {
-                limpa_historico();
-            }
+    }
+    clear() {
+        this.currentInput = '0';
+        this.updateDisplay();
+    }
+    clearAll() {
+        this.currentInput = '0';
+        this.operator = null;
+        this.previousInput = null;
+        this.shouldResetDisplay = false;
+        this.updateDisplay();
+    }
+    backspace() {
+        if (this.currentInput.length > 1) {
+            this.currentInput = this.currentInput.slice(0, -1);
         }
         else {
-            opera(val);
+            this.currentInput = '0';
         }
-    });
+        this.updateDisplay();
+    }
+    updateDisplay() {
+        this.display.value = this.currentInput;
+    }
+    addToHistory(expression) {
+        this.history.unshift(expression);
+        if (this.history.length > 50) {
+            this.history = this.history.slice(0, 50);
+        }
+        this.saveHistory();
+    }
+    showHistory() {
+        const modal = document.getElementById('history-modal');
+        const historyList = document.getElementById('history-list');
+        if (historyList) {
+            historyList.innerHTML = '';
+            if (this.history.length === 0) {
+                const li = document.createElement('li');
+                li.textContent = 'Nenhum cálculo realizado ainda';
+                li.style.fontStyle = 'italic';
+                li.style.opacity = '0.7';
+                historyList.appendChild(li);
+            }
+            else {
+                this.history.forEach(item => {
+                    const li = document.createElement('li');
+                    li.textContent = item;
+                    historyList.appendChild(li);
+                });
+            }
+        }
+        if (modal) {
+            modal.style.display = 'block';
+        }
+    }
+    hideHistory() {
+        const modal = document.getElementById('history-modal');
+        if (modal) {
+            modal.style.display = 'none';
+        }
+    }
+    clearHistory() {
+        this.history = [];
+        this.saveHistory();
+        const historyList = document.getElementById('history-list');
+        if (historyList) {
+            historyList.innerHTML = '';
+            const li = document.createElement('li');
+            li.textContent = 'Histórico limpo';
+            li.style.fontStyle = 'italic';
+            li.style.opacity = '0.7';
+            historyList.appendChild(li);
+        }
+    }
+    saveHistory() {
+        localStorage.setItem('calculator-history', JSON.stringify(this.history));
+    }
+    loadHistory() {
+        const saved = localStorage.getItem('calculator-history');
+        if (saved) {
+            this.history = JSON.parse(saved);
+        }
+    }
+}
+// Initialize calculator when DOM is loaded
+document.addEventListener('DOMContentLoaded', () => {
+    new ScientificCalculator();
 });

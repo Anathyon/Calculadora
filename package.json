@@ -1,0 +1,30 @@
+{
+  "name": "calculadora",
+  "version": "1.0.0",
+  "description": "Projeto-calculadora",
+  "keywords": [
+    "calculadora",
+    "vanilla",
+    "typescript",
+    "pwa"
+  ],
+  "homepage": "https://github.com/Anathyon/Calculadora#readme",
+  "bugs": {
+    "url": "https://github.com/Anathyon/Calculadora/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Anathyon/Calculadora.git"
+  },
+  "license": "ISC",
+  "author": "Anathyon Erysson",
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {
+    "dev": "live-server --port=3000",
+    "test": "echo \\\"Error: no test specified\\\" && exit 1"
+  },
+  "dependencies": {
+    "live-server": "^1.2.2"
+  }
+}
