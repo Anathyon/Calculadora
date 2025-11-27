@@ -16,10 +16,16 @@ class ScientificCalculator {
         buttons.forEach(button => {
             button.addEventListener('click', (e) => {
                 const target = e.target;
-                this.handleButtonClick(target.textContent || '');
+                const value = target.closest('.btn')?.textContent?.trim() || '';
+                const isDelete = target.closest('.btn-delete');
+                if (isDelete) {
+                    this.backspace();
+                }
+                else {
+                    this.handleButtonClick(value);
+                }
             });
         });
-        // Modal controls
         const historyBtn = document.getElementById('history-btn');
         const modal = document.getElementById('history-modal');
         const closeBtn = document.querySelector('.close');
@@ -31,8 +37,26 @@ class ScientificCalculator {
             if (e.target === modal)
                 this.hideHistory();
         });
+        document.addEventListener('keydown', (e) => this.handleKeyboard(e));
+    }
+    handleKeyboard(e) {
+        const key = e.key;
+        if (/\d/.test(key))
+            this.inputNumber(key);
+        if (['+', '-', '*', '/', '%'].includes(key))
+            this.inputOperator(key === '*' ? '×' : key);
+        if (key === 'Enter' || key === '=')
+            this.calculate();
+        if (key === 'Backspace')
+            this.backspace();
+        if (key === 'Escape')
+            this.clear();
+        if (key === '.')
+            this.inputNumber('.');
     }
     handleButtonClick(value) {
+        if (!value)
+            return;
         if (this.isNumber(value) || value === '.') {
             this.inputNumber(value);
         }
@@ -47,9 +71,6 @@ class ScientificCalculator {
         }
         else if (value === 'CL') {
             this.clearAll();
-        }
-        else if (value === '⌫') {
-            this.backspace();
         }
         else if (value === '±') {
             this.toggleSign();
@@ -102,7 +123,7 @@ class ScientificCalculator {
                 break;
             case '/':
                 if (current === 0) {
-                    alert('Erro: Divisão por zero!');
+                    this.showError('Erro');
                     return;
                 }
                 result = prev / current;
@@ -110,9 +131,9 @@ class ScientificCalculator {
             case '%':
                 result = (prev * current) / 100;
                 break;
-            default:
-                return;
+            default: return;
         }
+        result = Math.round(result * 100000000) / 100000000;
         const expression = `${this.previousInput} ${this.operator} ${this.currentInput} = ${result}`;
         this.addToHistory(expression);
         this.currentInput = result.toString();
@@ -125,78 +146,74 @@ class ScientificCalculator {
         const current = parseFloat(this.currentInput);
         let result;
         let expression;
-        switch (func) {
-            case 'sin':
-                result = Math.sin(this.toRadians(current));
-                expression = `sin(${current}) = ${result}`;
-                break;
-            case 'cos':
-                result = Math.cos(this.toRadians(current));
-                expression = `cos(${current}) = ${result}`;
-                break;
-            case 'tan':
-                result = Math.tan(this.toRadians(current));
-                expression = `tan(${current}) = ${result}`;
-                break;
-            case 'log':
-                if (current <= 0) {
-                    alert('Erro: Logaritmo de número não positivo!');
+        try {
+            switch (func) {
+                case 'sin':
+                    result = Math.sin(this.toRadians(current));
+                    expression = `sin(${current}) = ${result}`;
+                    break;
+                case 'cos':
+                    result = Math.cos(this.toRadians(current));
+                    expression = `cos(${current}) = ${result}`;
+                    break;
+                case 'tan':
+                    result = Math.tan(this.toRadians(current));
+                    expression = `tan(${current}) = ${result}`;
+                    break;
+                case 'log':
+                    if (current <= 0)
+                        throw new Error('Erro');
+                    result = Math.log10(current);
+                    expression = `log(${current}) = ${result}`;
+                    break;
+                case 'ln':
+                    if (current <= 0)
+                        throw new Error('Erro');
+                    result = Math.log(current);
+                    expression = `ln(${current}) = ${result}`;
+                    break;
+                case '√':
+                    if (current < 0)
+                        throw new Error('Erro');
+                    result = Math.sqrt(current);
+                    expression = `√(${current}) = ${result}`;
+                    break;
+                case 'x²':
+                    result = Math.pow(current, 2);
+                    expression = `(${current})² = ${result}`;
+                    break;
+                case '1/x':
+                    if (current === 0)
+                        throw new Error('Erro');
+                    result = 1 / current;
+                    expression = `1/(${current}) = ${result}`;
+                    break;
+                case 'n!':
+                    if (current < 0 || !Number.isInteger(current))
+                        throw new Error('Erro');
+                    result = this.factorial(current);
+                    expression = `${current}! = ${result}`;
+                    break;
+                case 'π':
+                    result = Math.PI;
+                    expression = `π = ${result}`;
+                    break;
+                case 'e':
+                    result = Math.E;
+                    expression = `e = ${result}`;
+                    break;
+                default:
                     return;
-                }
-                result = Math.log10(current);
-                expression = `log(${current}) = ${result}`;
-                break;
-            case 'ln':
-                if (current <= 0) {
-                    alert('Erro: Logaritmo natural de número não positivo!');
-                    return;
-                }
-                result = Math.log(current);
-                expression = `ln(${current}) = ${result}`;
-                break;
-            case '√':
-                if (current < 0) {
-                    alert('Erro: Raiz quadrada de número negativo!');
-                    return;
-                }
-                result = Math.sqrt(current);
-                expression = `√(${current}) = ${result}`;
-                break;
-            case 'x²':
-                result = current * current;
-                expression = `(${current})² = ${result}`;
-                break;
-            case '1/x':
-                if (current === 0) {
-                    alert('Erro: Divisão por zero!');
-                    return;
-                }
-                result = 1 / current;
-                expression = `1/(${current}) = ${result}`;
-                break;
-            case 'n!':
-                if (current < 0 || !Number.isInteger(current)) {
-                    alert('Erro: Fatorial apenas para números inteiros não negativos!');
-                    return;
-                }
-                result = this.factorial(current);
-                expression = `${current}! = ${result}`;
-                break;
-            case 'π':
-                result = Math.PI;
-                expression = `π = ${result}`;
-                break;
-            case 'e':
-                result = Math.E;
-                expression = `e = ${result}`;
-                break;
-            default:
-                return;
+            }
+            result = Math.round(result * 100000000) / 100000000;
+            this.addToHistory(expression);
+            this.currentInput = result.toString();
+            this.shouldResetDisplay = true;
+            this.updateDisplay();
         }
-        this.addToHistory(expression);
-        this.currentInput = result.toString();
-        this.shouldResetDisplay = true;
-        this.updateDisplay();
+        catch (e) {
+            this.showError(e.message || 'Erro');
+        }
     }
     toRadians(degrees) {
         return degrees * (Math.PI / 180);
@@ -237,11 +254,15 @@ class ScientificCalculator {
     updateDisplay() {
         this.display.value = this.currentInput;
     }
+    showError(msg) {
+        this.currentInput = msg;
+        this.updateDisplay();
+        this.shouldResetDisplay = true;
+    }
     addToHistory(expression) {
         this.history.unshift(expression);
-        if (this.history.length > 50) {
+        if (this.history.length > 50)
             this.history = this.history.slice(0, 50);
-        }
         this.saveHistory();
     }
     showHistory() {
@@ -264,40 +285,28 @@ class ScientificCalculator {
                 });
             }
         }
-        if (modal) {
+        if (modal)
             modal.style.display = 'block';
-        }
     }
     hideHistory() {
         const modal = document.getElementById('history-modal');
-        if (modal) {
+        if (modal)
             modal.style.display = 'none';
-        }
     }
     clearHistory() {
         this.history = [];
         this.saveHistory();
-        const historyList = document.getElementById('history-list');
-        if (historyList) {
-            historyList.innerHTML = '';
-            const li = document.createElement('li');
-            li.textContent = 'Histórico limpo';
-            li.style.fontStyle = 'italic';
-            li.style.opacity = '0.7';
-            historyList.appendChild(li);
-        }
+        this.showHistory();
     }
     saveHistory() {
         localStorage.setItem('calculator-history', JSON.stringify(this.history));
     }
     loadHistory() {
         const saved = localStorage.getItem('calculator-history');
-        if (saved) {
+        if (saved)
             this.history = JSON.parse(saved);
-        }
     }
 }
-// Initialize calculator when DOM is loaded
 document.addEventListener('DOMContentLoaded', () => {
     new ScientificCalculator();
 });
