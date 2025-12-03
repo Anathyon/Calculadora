@@ -22,9 +22,21 @@
   "main": "index.js",
   "scripts": {
     "dev": "live-server --port=3000",
-    "test": "echo \\\"Error: no test specified\\\" && exit 1"
+    "build": "npm run build:ts && npm run build:css",
+    "build:ts": "tsc",
+    "build:css": "sass CSS/index.scss CSS/index.css --style=compressed",
+    "watch": "concurrently \"tsc --watch\" \"sass --watch CSS/index.scss:CSS/index.css\"",
+    "start": "npm run build && npm run dev"
   },
   "dependencies": {
     "live-server": "^1.2.2"
+  },
+  "devDependencies": {
+    "sass": "^1.94.2",
+    "typescript": "^5.0.0",
+    "concurrently": "^8.0.0"
+  },
+  "devDependencies": {
+    "sass": "^1.94.2"
   }
 }

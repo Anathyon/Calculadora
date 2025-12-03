@@ -5,22 +5,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Calculadora Científica</title>
-    <meta name="description" content="Uma calculadora científica completa e responsiva.">
+    <meta name="description" content="Calculadora científica moderna com histórico e design responsivo">
     <link rel="icon" href="svgs/calculator-part-2-svgrepo-com.svg">
     <link rel="stylesheet" href="CSS/index.css">
     <link rel="manifest" href="manifest.json">
     <meta name="theme-color" content="#ff9500">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="apple-mobile-web-app-title" content="Calculadora">
     <link rel="apple-touch-icon" href="icons/icon.svg">
-    <meta name="msapplication-TileColor" content="#2a2a2a">
-    <meta name="msapplication-config" content="browserconfig.xml">
-
-    <!-- Open Graph / Facebook -->
-    <meta property="og:type" content="website">
-    <meta property="og:title" content="Calculadora Científica">
-    <meta property="og:description" content="Uma calculadora científica completa e responsiva.">
 
     <script src="script_js/index.js" defer></script>
 </head>
@@ -39,51 +31,52 @@
             </div>
 
             <div class="buttons">
-                <!-- Primeira linha - Funções científicas -->
-                <button class="btn btn-function">sin</button>
-                <button class="btn btn-function">cos</button>
-                <button class="btn btn-function">tan</button>
-                <button class="btn btn-function">log</button>
-                <button class="btn btn-function">ln</button>
+                <!-- Funções científicas -->
+                <div class="scientific-functions">
+                    <button class="btn btn-function">sin</button>
+                    <button class="btn btn-function">cos</button>
+                    <button class="btn btn-function">tan</button>
+                    <button class="btn btn-function">log</button>
+                    <button class="btn btn-function">ln</button>
+                    
+                    <button class="btn btn-function">π</button>
+                    <button class="btn btn-function">e</button>
+                    <button class="btn btn-function">x²</button>
+                    <button class="btn btn-function">√</button>
+                    <button class="btn btn-function">n!</button>
+                    
+                    <button class="btn btn-function">1/x</button>
+                    <button class="btn btn-function">x^y</button>
+                    <button class="btn btn-delete"><img src="svgs/eraser-svgrepo-com.svg" alt="Delete"></button>
+                    <button class="btn btn-clear">C</button>
+                    <button class="btn btn-clear">CL</button>
+                </div>
 
-                <!-- Segunda linha -->
-                <button class="btn btn-function">π</button>
-                <button class="btn btn-function">e</button>
-                <button class="btn btn-function">x²</button>
-                <button class="btn btn-function">√</button>
-                <button class="btn btn-function">n!</button>
-
-                <!-- Terceira linha -->
-                <button class="btn btn-function">1/x</button>
-                <button class="btn btn-delete"><img src="svgs/eraser-svgrepo-com.svg" alt="SVG-Delete"></button>
-                <button class="btn btn-clear">CL</button>
-                <button class="btn btn-clear">C</button>
-                <button class="btn btn-operator">%</button>
-
-                <!-- Quarta linha -->
-                <button class="btn btn-operator">/</button>
-                <button class="btn btn-number">7</button>
-                <button class="btn btn-number">8</button>
-                <button class="btn btn-number">9</button>
-                <button class="btn btn-operator">×</button>
-
-                <!-- Quinta linha -->
-                <button class="btn btn-operator">-</button>
-                <button class="btn btn-number">4</button>
-                <button class="btn btn-number">5</button>
-                <button class="btn btn-number">6</button>
-                <button class="btn btn-operator">+</button>
-
-                <!-- Sexta linha -->
-                <button class="btn btn-function">±</button>
-                <button class="btn btn-number">1</button>
-                <button class="btn btn-number">2</button>
-                <button class="btn btn-number">3</button>
-                <button class="btn btn-equals">=</button>
-
-                <!-- Sétima linha -->
-                <button class="btn btn-function">.</button>
-                <button class="btn btn-number">0</button>
+                <!-- Teclado principal -->
+                <div class="main-keypad">
+                    <button class="btn btn-function">±</button>
+                    <button class="btn btn-function">%</button>
+                    <button class="btn btn-function">.</button>
+                    <button class="btn btn-operator">/</button>
+                    
+                    <button class="btn btn-number">7</button>
+                    <button class="btn btn-number">8</button>
+                    <button class="btn btn-number">9</button>
+                    <button class="btn btn-operator">×</button>
+                    
+                    <button class="btn btn-number">4</button>
+                    <button class="btn btn-number">5</button>
+                    <button class="btn btn-number">6</button>
+                    <button class="btn btn-operator">-</button>
+                    
+                    <button class="btn btn-number">1</button>
+                    <button class="btn btn-number">2</button>
+                    <button class="btn btn-number">3</button>
+                    <button class="btn btn-operator">+</button>
+                    
+                    <button class="btn btn-number zero">0</button>
+                    <button class="btn btn-equals">=</button>
+                </div>
             </div>
         </div>
     </div>
