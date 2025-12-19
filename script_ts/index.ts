@@ -5,6 +5,7 @@ interface Calculator {
     previousInput: string | null;
     shouldResetDisplay: boolean;
     history: string[];
+    isScientificMode: boolean;
 }
 
 class ScientificCalculator implements Calculator {
@@ -14,14 +15,17 @@ class ScientificCalculator implements Calculator {
     previousInput: string | null = null;
     shouldResetDisplay: boolean = false;
     history: string[] = [];
+    isScientificMode: boolean = true;
 
     private readonly MAX_HISTORY = 50;
     private readonly PRECISION = 10;
+    private readonly MODE_KEY = 'calculator-mode';
 
     constructor() {
         this.display = document.getElementById('display') as HTMLInputElement;
         this.initializeEventListeners();
         this.loadHistory();
+        this.loadMode();
     }
 
     private initializeEventListeners(): void {
@@ -29,6 +33,10 @@ class ScientificCalculator implements Calculator {
         document.querySelectorAll('.btn').forEach(button => {
             button.addEventListener('click', this.handleButtonClick.bind(this));
         });
+
+        // Mode toggle
+        const modeBtn = document.getElementById('mode-btn');
+        modeBtn?.addEventListener('click', () => this.toggleMode());
 
         // Modal controls
         const historyBtn = document.getElementById('history-btn');
@@ -39,13 +47,42 @@ class ScientificCalculator implements Calculator {
         historyBtn?.addEventListener('click', () => this.showHistory());
         closeBtn?.addEventListener('click', () => this.hideHistory());
         clearHistoryBtn?.addEventListener('click', () => this.clearHistory());
-        
+
         window.addEventListener('click', (e) => {
             if (e.target === modal) this.hideHistory();
         });
 
         // Keyboard support
         document.addEventListener('keydown', this.handleKeyboard.bind(this));
+    }
+
+    private toggleMode(): void {
+        this.isScientificMode = !this.isScientificMode;
+        this.applyMode();
+        this.saveMode();
+    }
+
+    private applyMode(): void {
+        const container = document.querySelector('.calculator-container');
+        const modeBtn = document.getElementById('mode-btn');
+
+        if (this.isScientificMode) {
+            container?.classList.remove('simple-mode');
+            if (modeBtn) modeBtn.textContent = 'Sci';
+        } else {
+            container?.classList.add('simple-mode');
+            if (modeBtn) modeBtn.textContent = 'Pad';
+        }
+    }
+
+    private saveMode(): void {
+        localStorage.setItem(this.MODE_KEY, this.isScientificMode ? 'scientific' : 'simple');
+    }
+
+    private loadMode(): void {
+        const savedMode = localStorage.getItem(this.MODE_KEY);
+        this.isScientificMode = savedMode !== 'simple'; // Default to scientific
+        this.applyMode();
     }
 
     private handleButtonClick(e: Event): void {
@@ -65,7 +102,7 @@ class ScientificCalculator implements Calculator {
 
     private handleKeyboard(e: KeyboardEvent): void {
         const key = e.key;
-        
+
         if (/\d/.test(key)) this.inputNumber(key);
         else if (['+', '-', '*', '/', '%'].includes(key)) this.inputOperator(key === '*' ? '×' : key);
         else if (key === 'Enter' || key === '=') this.calculate();

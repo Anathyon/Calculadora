@@ -36,16 +36,31 @@ body {
     width: 100%;
     max-width: 320px;
     animation: slideIn 0.5s ease-out;
-    
+
     @keyframes slideIn {
         from {
             opacity: 0;
             transform: translateY(30px) scale(0.95);
         }
+
         to {
             opacity: 1;
             transform: translateY(0) scale(1);
         }
+    }
+}
+
+.simple-mode {
+    .scientific-functions {
+        display: none;
+    }
+
+    .calculator-container {
+        max-width: 280px;
+    }
+
+    #display {
+        font-size: 3.5rem;
     }
 }
 
@@ -59,6 +74,32 @@ body {
         color: var(--text-primary);
         font-size: 1.3rem;
         font-weight: 400;
+    }
+
+    .header-controls {
+        display: flex;
+        gap: 8px;
+        align-items: center;
+    }
+}
+
+.mode-btn {
+    background: rgba(255, 255, 255, 0.1);
+    border: none;
+    border-radius: 12px;
+    padding: 0 12px;
+    height: 36px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-primary);
+    font-size: 0.9rem;
+    font-weight: 500;
+
+    &:hover {
+        background: rgba(255, 255, 255, 0.2);
     }
 }
 
@@ -91,12 +132,13 @@ body {
     padding: 20px;
     margin-bottom: 20px;
     animation: fadeIn 0.6s ease-out 0.2s both;
-    
+
     @keyframes fadeIn {
         from {
             opacity: 0;
             transform: translateY(10px);
         }
+
         to {
             opacity: 1;
             transform: translateY(0);
@@ -126,22 +168,23 @@ body {
     grid-template-columns: repeat(5, 1fr);
     gap: 8px;
     margin-bottom: 8px;
-    
+
     .btn {
         animation: buttonSlideIn 0.4s ease-out both;
-        
+
         @for $i from 1 through 15 {
             &:nth-child(#{$i}) {
                 animation-delay: #{0.4 + ($i * 0.03)}s;
             }
         }
     }
-    
+
     @keyframes buttonSlideIn {
         from {
             opacity: 0;
             transform: translateY(20px) scale(0.8);
         }
+
         to {
             opacity: 1;
             transform: translateY(0) scale(1);
@@ -159,10 +202,10 @@ body {
         "four five six subtract"
         "one two three add"
         "zero zero equals equals";
-    
+
     .btn {
         animation: buttonSlideIn 0.4s ease-out both;
-        
+
         @for $i from 1 through 18 {
             &:nth-child(#{$i}) {
                 animation-delay: #{0.8 + ($i * 0.04)}s;
@@ -202,7 +245,7 @@ body {
 
     &:active {
         transform: scale(0.95);
-        
+
         &::before {
             width: 100px;
             height: 100px;
@@ -225,7 +268,7 @@ body {
     background: var(--accent-orange);
     color: var(--text-primary);
     font-size: 1.2rem;
-    
+
     &:hover {
         background: linear-gradient(135deg, #ff9500, #ffb84d);
         transform: translateY(-3px) scale(1.05);
@@ -257,21 +300,29 @@ body {
     color: var(--text-primary);
     font-size: 1.2rem;
     grid-area: equals;
-    
+
     &:hover {
         background: linear-gradient(135deg, #ff9500, #ffb84d);
         transform: translateY(-3px) scale(1.02);
         box-shadow: 0 8px 25px rgba(255, 149, 0, 0.5);
     }
-    
+
     &:active {
         animation: pulse 0.3s ease;
     }
-    
+
     @keyframes pulse {
-        0% { transform: scale(1); }
-        50% { transform: scale(1.1); }
-        100% { transform: scale(1); }
+        0% {
+            transform: scale(1);
+        }
+
+        50% {
+            transform: scale(1.1);
+        }
+
+        100% {
+            transform: scale(1);
+        }
     }
 }
 
@@ -280,22 +331,69 @@ body {
 }
 
 /* Grid positioning */
-.main-keypad .btn:nth-child(1) { grid-area: sign; }
-.main-keypad .btn:nth-child(2) { grid-area: percent; }
-.main-keypad .btn:nth-child(3) { grid-area: dot; }
-.main-keypad .btn:nth-child(4) { grid-area: divide; }
-.main-keypad .btn:nth-child(5) { grid-area: seven; }
-.main-keypad .btn:nth-child(6) { grid-area: eight; }
-.main-keypad .btn:nth-child(7) { grid-area: nine; }
-.main-keypad .btn:nth-child(8) { grid-area: multiply; }
-.main-keypad .btn:nth-child(9) { grid-area: four; }
-.main-keypad .btn:nth-child(10) { grid-area: five; }
-.main-keypad .btn:nth-child(11) { grid-area: six; }
-.main-keypad .btn:nth-child(12) { grid-area: subtract; }
-.main-keypad .btn:nth-child(13) { grid-area: one; }
-.main-keypad .btn:nth-child(14) { grid-area: two; }
-.main-keypad .btn:nth-child(15) { grid-area: three; }
-.main-keypad .btn:nth-child(16) { grid-area: add; }
+.main-keypad .btn:nth-child(1) {
+    grid-area: sign;
+}
+
+.main-keypad .btn:nth-child(2) {
+    grid-area: percent;
+}
+
+.main-keypad .btn:nth-child(3) {
+    grid-area: dot;
+}
+
+.main-keypad .btn:nth-child(4) {
+    grid-area: divide;
+}
+
+.main-keypad .btn:nth-child(5) {
+    grid-area: seven;
+}
+
+.main-keypad .btn:nth-child(6) {
+    grid-area: eight;
+}
+
+.main-keypad .btn:nth-child(7) {
+    grid-area: nine;
+}
+
+.main-keypad .btn:nth-child(8) {
+    grid-area: multiply;
+}
+
+.main-keypad .btn:nth-child(9) {
+    grid-area: four;
+}
+
+.main-keypad .btn:nth-child(10) {
+    grid-area: five;
+}
+
+.main-keypad .btn:nth-child(11) {
+    grid-area: six;
+}
+
+.main-keypad .btn:nth-child(12) {
+    grid-area: subtract;
+}
+
+.main-keypad .btn:nth-child(13) {
+    grid-area: one;
+}
+
+.main-keypad .btn:nth-child(14) {
+    grid-area: two;
+}
+
+.main-keypad .btn:nth-child(15) {
+    grid-area: three;
+}
+
+.main-keypad .btn:nth-child(16) {
+    grid-area: add;
+}
 
 /* Modal */
 .modal {
@@ -309,12 +407,13 @@ body {
     background-color: rgba(0, 0, 0, 0.5);
     backdrop-filter: blur(5px);
     animation: modalFadeIn 0.3s ease-out;
-    
+
     @keyframes modalFadeIn {
         from {
             opacity: 0;
             backdrop-filter: blur(0px);
         }
+
         to {
             opacity: 1;
             backdrop-filter: blur(5px);
@@ -332,12 +431,13 @@ body {
     overflow: hidden;
     box-shadow: var(--shadow);
     animation: modalSlideIn 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-    
+
     @keyframes modalSlideIn {
         from {
             opacity: 0;
             transform: translateY(-50px) scale(0.9);
         }
+
         to {
             opacity: 1;
             transform: translateY(0) scale(1);

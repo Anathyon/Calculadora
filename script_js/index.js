@@ -6,16 +6,21 @@ class ScientificCalculator {
         this.previousInput = null;
         this.shouldResetDisplay = false;
         this.history = [];
+        this.isScientificMode = true;
         this.MAX_HISTORY = 50;
         this.PRECISION = 10;
+        this.MODE_KEY = 'calculator-mode';
         this.display = document.getElementById('display');
         this.initializeEventListeners();
         this.loadHistory();
+        this.loadMode();
     }
     initializeEventListeners() {
         document.querySelectorAll('.btn').forEach(button => {
             button.addEventListener('click', this.handleButtonClick.bind(this));
         });
+        const modeBtn = document.getElementById('mode-btn');
+        modeBtn?.addEventListener('click', () => this.toggleMode());
         const historyBtn = document.getElementById('history-btn');
         const modal = document.getElementById('history-modal');
         const closeBtn = document.querySelector('.close');
@@ -28,6 +33,33 @@ class ScientificCalculator {
                 this.hideHistory();
         });
         document.addEventListener('keydown', this.handleKeyboard.bind(this));
+    }
+    toggleMode() {
+        this.isScientificMode = !this.isScientificMode;
+        this.applyMode();
+        this.saveMode();
+    }
+    applyMode() {
+        const container = document.querySelector('.calculator-container');
+        const modeBtn = document.getElementById('mode-btn');
+        if (this.isScientificMode) {
+            container?.classList.remove('simple-mode');
+            if (modeBtn)
+                modeBtn.textContent = 'Sci';
+        }
+        else {
+            container?.classList.add('simple-mode');
+            if (modeBtn)
+                modeBtn.textContent = 'Pad';
+        }
+    }
+    saveMode() {
+        localStorage.setItem(this.MODE_KEY, this.isScientificMode ? 'scientific' : 'simple');
+    }
+    loadMode() {
+        const savedMode = localStorage.getItem(this.MODE_KEY);
+        this.isScientificMode = savedMode !== 'simple';
+        this.applyMode();
     }
     handleButtonClick(e) {
         const target = e.target;
