@@ -22,7 +22,13 @@
         <div class="calculator-header">
             <h1>Calculadora</h1>
             <div class="header-controls">
-                <button class="mode-btn" id="mode-btn" title="Alternar Modo">Sci</button>
+                <div class="mode-toggle-container">
+                    <span class="mode-label">Científica</span>
+                    <label class="switch">
+                        <input type="checkbox" id="mode-toggle" checked>
+                        <span class="slider round"></span>
+                    </label>
+                </div>
                 <button class="history-btn" id="history-btn"><img src="svgs/history-svgrepo-com.svg"
                         alt="SVG-History"></button>
             </div>

@@ -35,8 +35,8 @@ class ScientificCalculator implements Calculator {
         });
 
         // Mode toggle
-        const modeBtn = document.getElementById('mode-btn');
-        modeBtn?.addEventListener('click', () => this.toggleMode());
+        const modeToggle = document.getElementById('mode-toggle') as HTMLInputElement;
+        modeToggle?.addEventListener('change', () => this.toggleMode());
 
         // Modal controls
         const historyBtn = document.getElementById('history-btn');
@@ -57,21 +57,24 @@ class ScientificCalculator implements Calculator {
     }
 
     private toggleMode(): void {
-        this.isScientificMode = !this.isScientificMode;
-        this.applyMode();
-        this.saveMode();
+        const modeToggle = document.getElementById('mode-toggle') as HTMLInputElement;
+        if (modeToggle) {
+            this.isScientificMode = modeToggle.checked;
+            this.applyMode();
+            this.saveMode();
+        }
     }
 
     private applyMode(): void {
         const container = document.querySelector('.calculator-container');
-        const modeBtn = document.getElementById('mode-btn');
+        const modeToggle = document.getElementById('mode-toggle') as HTMLInputElement;
 
         if (this.isScientificMode) {
             container?.classList.remove('simple-mode');
-            if (modeBtn) modeBtn.textContent = 'Sci';
+            if (modeToggle) modeToggle.checked = true;
         } else {
             container?.classList.add('simple-mode');
-            if (modeBtn) modeBtn.textContent = 'Pad';
+            if (modeToggle) modeToggle.checked = false;
         }
     }
 

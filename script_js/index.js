@@ -19,8 +19,8 @@ class ScientificCalculator {
         document.querySelectorAll('.btn').forEach(button => {
             button.addEventListener('click', this.handleButtonClick.bind(this));
         });
-        const modeBtn = document.getElementById('mode-btn');
-        modeBtn?.addEventListener('click', () => this.toggleMode());
+        const modeToggle = document.getElementById('mode-toggle');
+        modeToggle?.addEventListener('change', () => this.toggleMode());
         const historyBtn = document.getElementById('history-btn');
         const modal = document.getElementById('history-modal');
         const closeBtn = document.querySelector('.close');
@@ -35,22 +35,25 @@ class ScientificCalculator {
         document.addEventListener('keydown', this.handleKeyboard.bind(this));
     }
     toggleMode() {
-        this.isScientificMode = !this.isScientificMode;
-        this.applyMode();
-        this.saveMode();
+        const modeToggle = document.getElementById('mode-toggle');
+        if (modeToggle) {
+            this.isScientificMode = modeToggle.checked;
+            this.applyMode();
+            this.saveMode();
+        }
     }
     applyMode() {
         const container = document.querySelector('.calculator-container');
-        const modeBtn = document.getElementById('mode-btn');
+        const modeToggle = document.getElementById('mode-toggle');
         if (this.isScientificMode) {
             container?.classList.remove('simple-mode');
-            if (modeBtn)
-                modeBtn.textContent = 'Sci';
+            if (modeToggle)
+                modeToggle.checked = true;
         }
         else {
             container?.classList.add('simple-mode');
-            if (modeBtn)
-                modeBtn.textContent = 'Pad';
+            if (modeToggle)
+                modeToggle.checked = false;
         }
     }
     saveMode() {
