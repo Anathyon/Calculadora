@@ -259,6 +259,19 @@ input:checked + .slider:before {
   }
 }
 
+.standard-actions {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+  margin-bottom: 8px;
+}
+.standard-actions .btn-delete {
+  grid-column: span 2;
+}
+.standard-actions .btn {
+  animation: buttonSlideIn 0.4s ease-out both;
+}
+
 .main-keypad {
   display: grid;
   grid-template-columns: repeat(4, 1fr);

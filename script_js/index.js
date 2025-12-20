@@ -251,6 +251,18 @@ class ScientificCalculator {
                 case 'x^y':
                     this.inputOperator('^');
                     return;
+                case '|x|':
+                    result = Math.abs(current);
+                    expression = `|${current}| = ${result}`;
+                    break;
+                case '∛':
+                    result = Math.cbrt(current);
+                    expression = `∛(${current}) = ${result}`;
+                    break;
+                case '10^x':
+                    result = Math.pow(10, current);
+                    expression = `10^${current} = ${result}`;
+                    break;
                 default:
                     return;
             }
