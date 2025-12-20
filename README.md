@@ -11,17 +11,18 @@ Além de realizar operações matemáticas básicas e avançadas, a calculadora 
 - ✅ Quatro operações básicas (adição, subtração, multiplicação e divisão)
 - ✅ Operações com números decimais
 - ✅ Porcentagem e mudança de sinal (±)
-- ✅ Botões **C** (limpar entrada) e **CL** (limpar tudo)
-- ✅ Botão de correção (⌫) para apagar último caractere
+- ✅ Botões **C**, **CL** e **Delete** acessíveis em todos os modos
 
 ### Funções Científicas
 - ✅ Funções trigonométricas (sin, cos, tan)
 - ✅ Logaritmos (log base 10 e ln natural)
-- ✅ Potenciação (x²) e raiz quadrada (√)
+- ✅ Potenciação (x², 10^x, x^y) e raízes (√, ∛)
 - ✅ Constantes matemáticas (π e e)
-- ✅ Fatorial (n!) e inverso (1/x)
+- ✅ Fatorial (n!), inverso (1/x) e módulo (|x|)
 
 ### Recursos Avançados
+- ✅ **Alternância de Modos** - Switch para trocar entre **Padrão** e **Científica**
+- ✅ **Layout Flexível** - Grade científica completa com 15 funções
 - ✅ **PWA** - Funciona offline e pode ser instalada no dispositivo
 - ✅ **Histórico persistente** - Salva até 50 cálculos no localStorage
 - ✅ **Modal interativo** para visualização do histórico
