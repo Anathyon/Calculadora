@@ -1,0 +1,124 @@
+/* ========================================
+   NOTIFICAÇÃO PWA - CARD ANIMADO
+   ======================================== */
+
+.pwa-notification {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    width: 320px;
+    background: linear-gradient(135deg, #ff9500, #ff7b00);
+    color: white;
+    border-radius: 12px;
+    box-shadow: 0 8px 32px rgba(255, 149, 0, 0.3);
+    padding: 16px;
+    z-index: 9999;
+    transform: translateX(400px);
+    opacity: 0;
+    transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.pwa-notification.show {
+    transform: translateX(0);
+    opacity: 1;
+}
+
+.pwa-notification.hide {
+    transform: translateX(400px);
+    opacity: 0;
+}
+
+.pwa-notification-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 8px;
+}
+
+.pwa-notification-icon {
+    width: 24px;
+    height: 24px;
+    margin-right: 8px;
+    filter: brightness(0) invert(1);
+}
+
+.pwa-notification-title {
+    font-size: 16px;
+    font-weight: 600;
+    margin: 0;
+}
+
+.pwa-notification-message {
+    font-size: 14px;
+    margin: 0 0 12px 0;
+    opacity: 0.9;
+    line-height: 1.4;
+}
+
+.pwa-notification-actions {
+    display: flex;
+    gap: 8px;
+    justify-content: flex-end;
+}
+
+.pwa-btn {
+    padding: 8px 16px;
+    border: none;
+    border-radius: 6px;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.pwa-btn-install {
+    background: rgba(255, 255, 255, 0.2);
+    color: white;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.pwa-btn-install:hover {
+    background: rgba(255, 255, 255, 0.3);
+    transform: translateY(-1px);
+}
+
+.pwa-btn-close {
+    background: transparent;
+    color: rgba(255, 255, 255, 0.7);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.pwa-btn-close:hover {
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+}
+
+/* RESPONSIVO MOBILE */
+@media (max-width: 480px) {
+    .pwa-notification {
+        width: calc(100vw - 40px);
+        right: 20px;
+        left: 20px;
+        transform: translateY(-100px);
+    }
+    
+    .pwa-notification.show {
+        transform: translateY(0);
+    }
+    
+    .pwa-notification.hide {
+        transform: translateY(-100px);
+    }
+}
+
+/* ANIMAÇÃO DE PULSO */
+@keyframes pulse {
+    0% { box-shadow: 0 8px 32px rgba(255, 149, 0, 0.3); }
+    50% { box-shadow: 0 8px 32px rgba(255, 149, 0, 0.5); }
+    100% { box-shadow: 0 8px 32px rgba(255, 149, 0, 0.3); }
+}
+
+.pwa-notification.show {
+    animation: pulse 2s ease-in-out infinite;
+}
